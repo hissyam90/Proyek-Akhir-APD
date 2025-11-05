@@ -1,31 +1,45 @@
-# Proyek-Akhir-APD
-tempat pengumpulan Program, Flowchart, Laporan untuk proyek akhir APD Kelompok 1 (Kultus The Marias).
+# 🧠 Proyek Akhir APD – Kelompok 1 (Kultus The Marias)
 
-📁 Proyek Akhir APD – Kelompok 1 (Kultus The Marias)
-Selamat datang di repositori pengumpulan tugas akhir mata kuliah Arsitektur dan Perancangan Digital (APD). Repositori ini digunakan oleh Kelompok 1 – Kultus The Marias sebagai tempat terpusat untuk menyimpan seluruh komponen proyek akhir.
+Repositori ini merupakan tempat pengumpulan **Program**, **Flowchart**, dan **Laporan** untuk **Proyek Akhir** mata kuliah **Arsitektur dan Perancangan Digital (APD)** oleh **Kelompok 1 – Kultus The Marias**.
 
+---
 
-📌 Struktur Folder
-📦 ProyekAkhir-APD-Kelompok1
+## 📁 Struktur Folder
+
+📦 Proyek-Akhir-APD
 ├── 📁 Program
-│   └── (kode sumber dan dokumentasi program)
+│ └── (kode sumber dan dokumentasi program)
 ├── 📁 Flowchart
-│   └── (diagram alur logika sistem)
+│ └── (diagram alur logika sistem)
 ├── 📁 Laporan
-│   └── (laporan akhir dalam format PDF/DOCX)
+│ └── (laporan akhir dalam format PDF/DOCX)
 └── README.md
 
 
-📂 Deskripsi Folder
-- Program/
-Berisi file kode sumber, skrip, dan dokumentasi teknis dari sistem yang dikembangkan.
-- Flowchart/
-Berisi diagram alur (flowchart) yang menggambarkan logika dan proses kerja sistem.
-- Laporan/
-Berisi laporan akhir proyek, termasuk latar belakang, perancangan, implementasi, dan kesimpulan.
+---
 
-👥 Anggota Kelompok
-- Antung Hissyam           2509106092
-- Muhammad Ancel Prinata   2509106099
-- Meyssa Reguel Sitompul   2509106108
+## 📂 Deskripsi Folder
 
+- **Program/**  
+  Berisi file kode sumber, skrip, dan dokumentasi teknis dari sistem yang dikembangkan.  
+
+- **Flowchart/**  
+  Berisi diagram alur (flowchart) yang menggambarkan logika dan proses kerja sistem.  
+
+- **Laporan/**  
+  Berisi laporan akhir proyek, mencakup latar belakang, perancangan, implementasi, serta kesimpulan.  
+
+---
+
+## 👥 Anggota Kelompok
+
+| Nama                      | NIM         |
+|---------------------------|-------------|
+| Antung Hissyam            | 2509106092  |
+| Muhammad Ancel Prinata    | 2509106099  |
+| Meyssa Reguel Sitompul    | 2509106108  |
+
+---
+
+✨ *Kelompok 1 – Kultus The Marias*  
+*Algoritma Pemrograman Dasar*

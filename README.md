@@ -6,6 +6,7 @@ Repositori ini merupakan tempat pengumpulan **Program**, **Flowchart**, dan **La
 
 ## 📁 Struktur Folder
 
+<pre>
 📦 Proyek-Akhir-APD
 │
 ├── 📁 Program
@@ -18,7 +19,7 @@ Repositori ini merupakan tempat pengumpulan **Program**, **Flowchart**, dan **La
 │   └── (laporan akhir dalam format PDF/DOCX)
 │
 └── 📄 README.md
-
+</pre>
 
 ---
 

@@ -9,14 +9,14 @@ Repositori ini merupakan tempat pengumpulan **Program**, **Flowchart**, dan **La
 <pre>
 📦 Proyek-Akhir-APD
 │
-├── 📁 Program
-│   └── (kode sumber dan dokumentasi program)
-│
 ├── 📁 Flowchart
 │   └── (diagram alur logika sistem)
 │
 ├── 📁 Laporan
 │   └── (laporan akhir dalam format PDF/DOCX)
+│
+├── 📁 Program
+│   └── (kode sumber dan dokumentasi program)
 │
 ├── 📁 csv
 │   └── (folder penyimpanan data dalam format CSV)

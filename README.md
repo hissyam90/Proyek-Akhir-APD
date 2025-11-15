@@ -35,7 +35,10 @@ Repositori ini merupakan tempat pengumpulan **Program**, **Flowchart**, dan **La
   Berisi diagram alur (flowchart) yang menggambarkan logika dan proses kerja sistem.  
 
 - **Laporan/**  
-  Berisi laporan akhir proyek, mencakup latar belakang, perancangan, implementasi, serta kesimpulan.  
+  Berisi laporan akhir proyek, mencakup latar belakang, perancangan, implementasi, serta kesimpulan.
+
+- **csv/**  
+  Berisi penyimpanan data dari program ini, mencakup data gaji, data pegawai, data pengguna (yang berisi akun-akun).
 
 ---
 

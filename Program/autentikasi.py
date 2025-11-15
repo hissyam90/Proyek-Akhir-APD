@@ -1,16 +1,19 @@
-from function import pengguna, login
+# autentikasi.py
+import function
 
 # prosedur register
 def register():
-    global pengguna
+    """
+    Register publik: hanya dapat membuat akun dengan role 'admin' atau 'owner'.
+    Pegawai TIDAK boleh register lewat sini (admin harus membuat akun pegawai).
+    """
     try:
-        print("=== REGISTER AKUN BARU ===")
-
+        print("=== REGISTER AKUN BARU (owner/admin) ===")
         username = input("Masukkan username (maksimal 50 karakter): ")
         if len(username) > 50:
             print("Error: Username tidak boleh lebih dari 50 karakter.")
             return
-        if username in pengguna:
+        if username in function.pengguna:
             print("Error: Username sudah terdaftar.")
             return
 
@@ -22,12 +25,14 @@ def register():
             print("Error: Password tidak boleh lebih dari 50 karakter.")
             return
 
-        role = input("Masukkan role (admin/pengguna): ")
-        if role not in ["admin", "pengguna"]:
-            print("Error: Role tidak valid, hanya boleh 'admin' atau 'pengguna'.")
+        role = input("Masukkan role (owner/admin): ")
+        if role not in ["owner", "admin"]:
+            print("Error: Role tidak valid. Untuk registrasi publik hanya 'owner' atau 'admin'.")
             return
 
-        pengguna[username] = {"password": password, "role": role}
+        # simpan
+        function.pengguna[username] = {"password": password, "role": role, "idpegawai": None}
+        function.save_pengguna()
         print("Registrasi berhasil! Silakan login.")
 
     except Exception as e:
@@ -36,24 +41,27 @@ def register():
 
 # prosedur login
 def login_user():
-    global login
+    global function
     try:
-        if len(pengguna) == 0:
-            print("Belum ada pengguna, silakan registrasi dahulu.")
+        if len(function.pengguna) == 0:
+            print("Belum ada pengguna, silakan registrasi (owner/admin) dahulu.")
             return
 
         username = input("Masukkan username: ")
         password = input("Masukkan password: ")
 
-        if username not in pengguna:
+        if username not in function.pengguna:
             print("Error: Username tidak ditemukan.")
             return
-        if pengguna[username]["password"] != password:
+        if function.pengguna[username]["password"] != password:
             print("Error: Password salah.")
             return
 
-        login = {"username": username, "role": pengguna[username]["role"]}
-        print("Login berhasil sebagai", login["role"])
+        # set global login reference di module function
+        info = function.pengguna[username]
+        # include idpegawai apabila ada
+        function.login = {"username": username, "role": info.get("role"), "idpegawai": info.get("idpegawai")}
+        print("Login berhasil sebagai", function.login["role"])
 
     except Exception as e:
         print("Terjadi kesalahan saat login:", e)

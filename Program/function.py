@@ -1,11 +1,143 @@
-# variabel global
-pengguna = {}
-pegawai = {}
-login = None
+# function.py
+import csv
+import os
 
-# fungsi rekursif ngitung jumlah data pegawai    
-def hitung_pegawai(keys):
-    if not keys:
-        return 0
-    else:
-        return 1 + hitung_pegawai(keys[1:])
+# direk ke path folder csv
+CSV_DIR = "csv"
+PENGGUNA_CSV = os.path.join(CSV_DIR, "pengguna.csv")
+PEGAWAI_CSV = os.path.join(CSV_DIR, "pegawai.csv")
+GAJI_CSV = os.path.join(CSV_DIR, "gaji.csv")
+
+# global variable
+pengguna = {}   
+pegawai = {}    
+gaji = {}       
+login = None    
+
+
+# csv handler
+def ensure_csv_dir():
+    """Membuat folder CSV jika belum ada."""
+    if not os.path.exists(CSV_DIR):
+        os.makedirs(CSV_DIR)
+
+def load_pengguna():
+    pengguna.clear()
+    if not os.path.exists(PENGGUNA_CSV):
+        return
+
+    with open(PENGGUNA_CSV, newline="", encoding="utf-8") as f:
+        reader = csv.reader(f)
+        for row in reader:
+            if not row:
+                continue
+
+            username = row[0]
+            password = row[1]
+            role = row[2]
+            idpeg_raw = row[3] if len(row) > 3 and row[3] != "" else None
+            idpegawai = int(idpeg_raw) if idpeg_raw else None
+
+            pengguna[username] = {
+                "password": password,
+                "role": role,
+                "idpegawai": idpegawai
+            }
+
+def save_pengguna():
+    ensure_csv_dir()
+    with open(PENGGUNA_CSV, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        for username, info in pengguna.items():
+            idp = "" if info["idpegawai"] is None else info["idpegawai"]
+            writer.writerow([
+                username,
+                info["password"],
+                info["role"],
+                idp
+            ])
+
+def load_pegawai():
+    pegawai.clear()
+    if not os.path.exists(PEGAWAI_CSV):
+        return
+
+    with open(PEGAWAI_CSV, newline="", encoding="utf-8") as f:
+        reader = csv.reader(f)
+        for row in reader:
+            if not row:
+                continue
+
+            try:
+                idp = int(row[0])
+            except:
+                continue
+
+            nama = row[1]
+            jabatan = row[2]
+            hp = row[3]
+
+            pegawai[idp] = {
+                "nama": nama,
+                "jabatan": jabatan,
+                "hp": hp
+            }
+
+def save_pegawai():
+    ensure_csv_dir()
+    with open(PEGAWAI_CSV, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        for idp in sorted(pegawai.keys()):
+            info = pegawai[idp]
+            writer.writerow([
+                idp,
+                info["nama"],
+                info["jabatan"],
+                info["hp"]
+            ])
+
+def load_gaji():
+    gaji.clear()
+    if not os.path.exists(GAJI_CSV):
+        return
+
+    with open(GAJI_CSV, newline="", encoding="utf-8") as f:
+        reader = csv.reader(f)
+        for row in reader:
+            if not row:
+                continue
+
+            try:
+                idp = int(row[0])
+            except:
+                continue
+
+            gaji[idp] = row[1]
+
+def save_gaji():
+    ensure_csv_dir()
+    with open(GAJI_CSV, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        for idp in sorted(gaji.keys()):
+            writer.writerow([idp, gaji[idp]])
+
+
+# load & save all csv
+def load_all():
+    ensure_csv_dir()
+    load_pengguna()
+    load_pegawai()
+    load_gaji()
+
+def save_all():
+    save_pengguna()
+    save_pegawai()
+    save_gaji()
+
+
+# auto increment id pegawai
+def generate_id_pegawai():
+    """Generate ID baru berbasis auto-increment integer."""
+    if len(pegawai) == 0:
+        return 1
+    return max(pegawai.keys()) + 1

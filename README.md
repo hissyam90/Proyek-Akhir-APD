@@ -1,6 +1,6 @@
 # 🧠 Proyek Akhir APD – Kelompok 1 (Kultus The Marias)
 
-Repositori ini merupakan tempat pengumpulan **Program**, **Flowchart**, dan **Laporan** untuk **Proyek Akhir** mata kuliah **Algoritma Pemrograman Dasar (APD)** oleh **Kelompok 1 – Kultus The Marias**.
+Repositori ini merupakan tempat pengumpulan **Program**, **Flowchart**, dan **Laporan** untuk **Proyek Akhir** mata kuliah **Arsitektur dan Perancangan Digital (APD)** oleh **Kelompok 1 – Kultus The Marias**.
 
 ---
 

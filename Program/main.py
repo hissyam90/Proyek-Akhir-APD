@@ -1,87 +1,141 @@
+# main.py
 import autentikasi
-from pegawai import tampilkan_data, tambah_data, edit_data, hapus_data
+import function
+import pegawai
 from prettytable import PrettyTable as PT
 
+# load csv
+function.load_all()
 
 def buat_tabel_menu(judul, opsi):
-    tabel = PT()
-    tabel.field_names = [judul]
-    for item in opsi:
-        tabel.add_row([item])
-    print(tabel)
+    t = PT()
+    t.field_names = [judul]
+    for o in opsi:
+        t.add_row([o])
+    print(t)
 
-
+# menu utama
 while True:
     buat_tabel_menu(
         "PROGRAM MANAJEMEN PEGAWAI | Perusahaan Cumi Hitam Pak Kris",
-        ["1. Register", "2. Login", "3. Keluar"]
+        ["1. Register (owner/admin)", "2. Login", "3. Keluar"]
     )
 
-    menu = input("Pilih menu: ")
+    menu = input("Pilih menu: ").strip()
 
     if menu == "1":
         autentikasi.register()
 
     elif menu == "2":
         autentikasi.login_user()
-        if autentikasi.login is not None:
-            if autentikasi.login["role"] == "admin":
-                while True:
-                    buat_tabel_menu(
-                        "MENU ADMIN",
-                        [
-                            "1. Lihat Data Pegawai",
-                            "2. Tambah Pegawai",
-                            "3. Edit Data Pegawai",
-                            "4. Hapus Pegawai",
-                            "5. Logout",
-                        ]
-                    )
-                    pilihan = input("Pilih menu: ")
 
-                    if pilihan == "1":
-                        tampilkan_data()
-                    elif pilihan == "2":
-                        tambah_data()
-                    elif pilihan == "3":
-                        if tampilkan_data():
-                            try:
-                                id_edit = input("Masukkan ID Pegawai yang ingin diubah: ")
-                                edit_data(id_edit)
-                            except Exception as e:
-                                print("Terjadi kesalahan saat memilih ID Pegawai", e)
-                    elif pilihan == "4":
-                        if tampilkan_data():
-                            try:
-                                id_hapus = input("Masukkan ID Pegawai yang ingin dihapus: ")
-                                hapus_data(id_hapus)
-                            except Exception as e:
-                                print("Terjadi kesalahan saat memilih ID yang ingin dihapus", e)
-                    elif pilihan == "5":
-                        print("Logout berhasil.")
-                        autentikasi.login = None
-                        break
-                    else:
-                        print("Pilihan tidak valid.")
+        if function.login is None:
+            continue
 
-            elif autentikasi.login["role"] == "pengguna":
-                while True:
-                    buat_tabel_menu(
-                        "MENU PENGGUNA",
-                        ["1. Lihat Data Pegawai", "2. Logout"]
-                    )
-                    pilihan = input("Pilih menu: ")
-                    if pilihan == "1":
-                        tampilkan_data()
-                    elif pilihan == "2":
-                        print("Logout berhasil.")
-                        autentikasi.login = None
-                        break
-                    else:
-                        print("Pilihan tidak valid.")
+        role = function.login.get("role")
+
+        # menu owner
+        if role == "owner":
+            while True:
+                buat_tabel_menu(
+                    "MENU OWNER",
+                    [
+                        "1. Lihat Data Pegawai",
+                        "2. Lihat Semua Gaji",
+                        "3. Tambah/Set Gaji Pegawai",
+                        "4. Logout"
+                    ]
+                )
+                pilihan = input("Pilih menu: ").strip()
+
+                if pilihan == "1":
+                    pegawai.tampilkan_data()
+
+                elif pilihan == "2":
+                    pegawai.lihat_semua_gaji()
+
+                elif pilihan == "3":
+                    pegawai.set_gaji()
+
+                elif pilihan == "4":
+                    print("Logout berhasil.")
+                    function.login = None
+                    break
+
+                else:
+                    print("Pilihan tidak valid.")
+
+        # menu admin
+        elif role == "admin":
+            while True:
+                buat_tabel_menu(
+                    "MENU ADMIN",
+                    [
+                        "1. Lihat Data Pegawai",
+                        "2. Tambah Pegawai",
+                        "3. Edit Data Pegawai",
+                        "4. Hapus Pegawai",
+                        "5. Buat Akun Pegawai",
+                        "6. Logout"
+                    ]
+                )
+                pilihan = input("Pilih menu: ").strip()
+
+                if pilihan == "1":
+                    pegawai.tampilkan_data()
+
+                elif pilihan == "2":
+                    pegawai.tambah_data()
+
+                elif pilihan == "3":
+                    if pegawai.tampilkan_data():
+                        id_edit = input("Masukkan ID Pegawai yang ingin diubah: ").strip()
+                        pegawai.edit_data(id_edit)
+
+                elif pilihan == "4":
+                    if pegawai.tampilkan_data():
+                        id_hapus = input("Masukkan ID Pegawai yang ingin dihapus: ").strip()
+                        pegawai.hapus_data(id_hapus)
+
+                elif pilihan == "5":
+                    pegawai.buat_akun_pegawai()
+
+                elif pilihan == "6":
+                    print("Logout berhasil.")
+                    function.login = None
+                    break
+
+                else:
+                    print("Pilihan tidak valid.")
+
+        # menu pegawai
+        elif role == "pegawai":
+            while True:
+                buat_tabel_menu(
+                    "MENU PEGAWAI",
+                    ["1. Lihat Gaji Saya", "2. Logout"]
+                )
+
+                pilihan = input("Pilih menu: ").strip()
+
+                if pilihan == "1":
+                    pegawai.lihat_gaji_sendiri(function.login.get("username"))
+
+                elif pilihan == "2":
+                    print("Logout berhasil.")
+                    function.login = None
+                    break
+
+                else:
+                    print("Pilihan tidak valid.")
+
+        else:
+            print("Role tidak dikenali.")
+            function.login = None
 
     elif menu == "3":
         print("Terima kasih telah menggunakan program ini.")
         break
+
     else:
         print("Pilihan tidak valid.")

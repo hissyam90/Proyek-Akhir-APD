@@ -18,6 +18,9 @@ Repositori ini merupakan tempat pengumpulan **Program**, **Flowchart**, dan **La
 ├── 📁 Laporan
 │   └── (laporan akhir dalam format PDF/DOCX)
 │
+├── 📁 csv
+│   └── (folder penyimpanan data dalam format CSV)
+│
 └── 📄 README.md
 </pre>
 

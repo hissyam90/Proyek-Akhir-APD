@@ -153,7 +153,7 @@ def buat_akun_pegawai():
                 print("ID tidak ditemukan. Periksa tabel di atas.")
                 continue
 
-            break  # ID valid
+            break  # id valid
 
         # username akun pegawai
         username = input("Masukkan username untuk pegawai: ").strip()
@@ -225,7 +225,7 @@ def lihat_gaji_sendiri(username):
     info = function.pengguna.get(username)
 
     if not info:
-        print("Error: Pengguna tidak ditemukan.")
+        print("Error: Pegawai tidak ditemukan.")
         return
 
     idp = info.get("idpegawai")

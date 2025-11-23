@@ -105,10 +105,15 @@ def hapus_data(id_hapus_raw):
         del function.gaji[id_hapus]
         function.save_gaji()
 
-    # hapus idpegawai di pengguna
+    # hapus akun pegawai di pengguna.csv
+    hapus_user_list = []
     for username, info in function.pengguna.items():
         if info.get("idpegawai") == id_hapus:
-            function.pengguna[username]["idpegawai"] = None
+            hapus_user_list.append(username)
+
+    for u in hapus_user_list:
+        del function.pengguna[u]
+
     function.save_pengguna()
 
     # hapus pegawai

@@ -46,7 +46,8 @@ def tambah_data():
         function.pegawai[idp] = {
             "nama": nama,
             "jabatan": jabatan,
-            "hp": hp
+            "hp": hp,
+            "gaji": None     # ★ gaji pindah ke sini
         }
 
         function.save_pegawai()
@@ -100,15 +101,15 @@ def hapus_data(id_hapus_raw):
         print("Error: ID pegawai tidak ditemukan.")
         return
 
-    # hapus gaji kalau ada
-    if id_hapus in function.gaji:
-        del function.gaji[id_hapus]
-        function.save_gaji()
-
-    # hapus idpegawai di pengguna
+    # ★ hapus akun pegawai yang terhubung ke idpegawai
+    hapus_user_list = []
     for username, info in function.pengguna.items():
         if info.get("idpegawai") == id_hapus:
-            function.pengguna[username]["idpegawai"] = None
+            hapus_user_list.append(username)
+
+    for u in hapus_user_list:
+        del function.pengguna[u]
+
     function.save_pengguna()
 
     # hapus pegawai
@@ -153,7 +154,7 @@ def buat_akun_pegawai():
                 print("ID tidak ditemukan. Periksa tabel di atas.")
                 continue
 
-            break  # ID valid
+            break  # id valid
 
         # username akun pegawai
         username = input("Masukkan username untuk pegawai: ").strip()
@@ -182,22 +183,40 @@ def buat_akun_pegawai():
 
 # owner liat semua gaji pegawai
 def lihat_semua_gaji():
-    if len(function.gaji) == 0:
-        print("Belum ada data gaji.")
+
+    if len(function.pegawai) == 0:
+        print("Belum ada data pegawai.")
         return
 
     t = PrettyTable()
     t.field_names = ["ID Pegawai", "Nama", "Gaji"]
 
-    for idp in sorted(function.gaji.keys()):
-        nama = function.pegawai.get(idp, {}).get("nama", "(Tidak Terdaftar)")
-        t.add_row([idp, nama, function.gaji[idp]])
+    for idp in sorted(function.pegawai.keys()):
+        d = function.pegawai[idp]
+        gaji = d.get("gaji", "-")
+        t.add_row([idp, d["nama"], gaji])
 
     print(t)
 
 
 # owner ngegaji pegawai
 def set_gaji():
+
+    # tampilkan daftar pegawai 
+    if len(function.pegawai) == 0:
+        print("Belum ada data pegawai.")
+        return
+
+    t = PrettyTable()
+    t.field_names = ["ID", "Nama", "Jabatan", "Nomor HP", "Gaji"]
+
+    for idp in sorted(function.pegawai.keys()):
+        d = function.pegawai[idp]
+        gaji_val = d.get("gaji", "-")
+        t.add_row([idp, d["nama"], d["jabatan"], d["hp"], gaji_val])
+
+    print(t)
+
     try:
         idp_raw = input("Masukkan ID Pegawai: ").strip()
         idp = int(idp_raw)
@@ -214,8 +233,9 @@ def set_gaji():
         print("Error: Gaji harus angka.")
         return
 
-    function.gaji[idp] = nominal
-    function.save_gaji()
+    # ★ simpan gaji ke pegawai.csv
+    function.pegawai[idp]["gaji"] = nominal
+    function.save_pegawai()
 
     print("Gaji berhasil disimpan.")
 
@@ -225,19 +245,21 @@ def lihat_gaji_sendiri(username):
     info = function.pengguna.get(username)
 
     if not info:
-        print("Error: Pengguna tidak ditemukan.")
+        print("Error: Pegawai tidak ditemukan.")
         return
 
     idp = info.get("idpegawai")
 
-    if idp not in function.gaji:
+    d = function.pegawai.get(idp)
+
+    if not d or d.get("gaji") is None:
         print("Gaji belum diatur.")
         return
 
-    nama = function.pegawai.get(idp, {}).get("nama", "(Tidak Terdaftar)")
+    nama = d.get("nama", "(Tidak Terdaftar)")
 
     t = PrettyTable()
     t.field_names = ["ID Pegawai", "Nama", "Gaji"]
-    t.add_row([idp, nama, function.gaji[idp]])
+    t.add_row([idp, nama, d["gaji"]])
 
     print(t)

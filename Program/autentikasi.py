@@ -3,10 +3,6 @@ import function
 
 # prosedur register
 def register():
-    """
-    Register publik: hanya dapat membuat akun dengan role 'admin' atau 'owner'.
-    Pegawai TIDAK boleh register lewat sini (admin harus membuat akun pegawai).
-    """
     try:
         print("=== REGISTER AKUN BARU (owner/admin) ===")
         username = input("Masukkan username (maksimal 50 karakter): ")

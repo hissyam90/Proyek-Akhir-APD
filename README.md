@@ -50,7 +50,7 @@ Repositori ini menggunakan beberapa branch untuk memisahkan tahap pengembangan a
   Branch utama yang berisi versi final, stabil, dan siap digunakan dari program. Semua perubahan yang telah diverifikasi dan lolos pengujian akan di-merge ke branch ini.
 
 - **checkpoint-1**
-  Branch yang digunakan khusus untuk kebutuhan Checkpoint 1, termasuk pengembangan fitur, dokumentasi, atau revisi yang berhubungan dengan tahapan checkpoint tersebut.
+  Branch yang digunakan khusus untuk kebutuhan Checkpoint, yaitu sebagai tempat penyimpanan progres atau versi tertentu sesuai ketentuan tugas pada tahap checkpoint.
 
 - **testing**
   Branch yang ditujukan untuk pengujian fitur, perbaikan bug, atau percobaan kode sebelum diintegrasikan ke branch utama. Seluruh eksperimen dilakukan di sini agar tidak mengganggu stabilitas program.

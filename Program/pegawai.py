@@ -216,7 +216,7 @@ def set_gaji():
 
     for idp in sorted(function.pegawai.keys()):
         d = function.pegawai[idp]
-        gaji_val = d.get("gaji", "-")
+        gaji_val = d.get("gaji", "-") if d.get("gaji") else "-"
         t.add_row([idp, d["nama"], d["jabatan"], d["hp"], gaji_val])
 
     print(t)

@@ -6,12 +6,10 @@ import os
 CSV_DIR = "csv"
 PENGGUNA_CSV = os.path.join(CSV_DIR, "pengguna.csv")
 PEGAWAI_CSV = os.path.join(CSV_DIR, "pegawai.csv")
-GAJI_CSV = os.path.join(CSV_DIR, "gaji.csv")
 
 # global variable
 pengguna = {}   
 pegawai = {}    
-gaji = {}       
 login = None    
 
 
@@ -44,6 +42,7 @@ def load_pengguna():
                 "idpegawai": idpegawai
             }
 
+
 def save_pengguna():
     ensure_csv_dir()
     with open(PENGGUNA_CSV, "w", newline="", encoding="utf-8") as f:
@@ -56,6 +55,7 @@ def save_pengguna():
                 info["role"],
                 idp
             ])
+
 
 def load_pegawai():
     pegawai.clear()
@@ -76,12 +76,15 @@ def load_pegawai():
             nama = row[1]
             jabatan = row[2]
             hp = row[3]
+            gaji = row[4] if len(row) > 4 and row[4] != "" else None   # ★ ambil gaji
 
             pegawai[idp] = {
                 "nama": nama,
                 "jabatan": jabatan,
-                "hp": hp
+                "hp": hp,
+                "gaji": gaji
             }
+
 
 def save_pegawai():
     ensure_csv_dir()
@@ -93,33 +96,9 @@ def save_pegawai():
                 idp,
                 info["nama"],
                 info["jabatan"],
-                info["hp"]
+                info["hp"],
+                info.get("gaji", "")   # ★ simpan gaji
             ])
-
-def load_gaji():
-    gaji.clear()
-    if not os.path.exists(GAJI_CSV):
-        return
-
-    with open(GAJI_CSV, newline="", encoding="utf-8") as f:
-        reader = csv.reader(f)
-        for row in reader:
-            if not row:
-                continue
-
-            try:
-                idp = int(row[0])
-            except:
-                continue
-
-            gaji[idp] = row[1]
-
-def save_gaji():
-    ensure_csv_dir()
-    with open(GAJI_CSV, "w", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
-        for idp in sorted(gaji.keys()):
-            writer.writerow([idp, gaji[idp]])
 
 
 # load & save all csv
@@ -127,12 +106,10 @@ def load_all():
     ensure_csv_dir()
     load_pengguna()
     load_pegawai()
-    load_gaji()
 
 def save_all():
     save_pengguna()
     save_pegawai()
-    save_gaji()
 
 
 # auto increment id pegawai

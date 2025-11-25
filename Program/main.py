@@ -49,17 +49,14 @@ while True:
                     pegawai.tampilkan_data()
 
                 elif pilihan == "2":
-                    pegawai.lihat_semua_gaji()
-
-                elif pilihan == "3":
                     pegawai.set_gaji()
 
-                elif pilihan == "4":
+                elif pilihan == "3":
                     if pegawai.tampilkan_data():
                         id_hapus = input("Masukkan ID Pegawai yang ingin dihapus: ").strip()
                         pegawai.hapus_data(id_hapus)
 
-                elif pilihan == "5":
+                elif pilihan == "4":
                     print("Logout berhasil.")
                     function.login = None
                     break
@@ -76,8 +73,7 @@ while True:
                         "1. Lihat Data Pegawai",
                         "2. Tambah Pegawai",
                         "3. Edit Data Pegawai",
-                        "4. Buat Akun Pegawai",
-                        "5. Logout"
+                        "4. Logout"
                     ]
                 )
                 pilihan = input("Pilih menu: ").strip()
@@ -94,9 +90,6 @@ while True:
                         pegawai.edit_data(id_edit)
 
                 elif pilihan == "4":
-                    pegawai.buat_akun_pegawai()
-
-                elif pilihan == "5":
                     print("Logout berhasil.")
                     function.login = None
                     break

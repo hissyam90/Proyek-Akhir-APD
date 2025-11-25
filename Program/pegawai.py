@@ -54,7 +54,22 @@ def tambah_data():
         }
 
         function.save_pegawai()
+
+        # otomatis buat akun
+        username_auto = nama.lower().replace(" ", "") + str(idp)
+        password_auto = "pegawai" + str(idp) + "1234567890"
+
+        function.pengguna[username_auto] = {
+            "password": password_auto,
+            "role": "pegawai",
+            "idpegawai": idp
+        }
+        function.save_pengguna()
+
         print("Data pegawai berhasil ditambahkan.")
+        print(f"Akun login otomatis dibuat:")
+        print(f"  Username : {username_auto}")
+        print(f"  Password : {password_auto}")
 
     except Exception as e:
         print("Terjadi kesalahan saat menambah data:", e)
@@ -198,7 +213,7 @@ def set_gaji():
 
     for idp in sorted(function.pegawai.keys()):
         d = function.pegawai[idp]
-        gaji_val = d.get("gaji", "-")
+        gaji_val = d.get("gaji", "-") if d.get("gaji") else "-"
         t.add_row([idp, d["nama"], d["jabatan"], d["hp"], gaji_val])
 
     print(t)

@@ -76,7 +76,7 @@ def load_pegawai():
             nama = row[1]
             jabatan = row[2]
             hp = row[3]
-            gaji = row[4] if len(row) > 4 and row[4] != "" else None   # ★ ambil gaji
+            gaji = row[4] if len(row) > 4 and row[4] != "" else None   
 
             pegawai[idp] = {
                 "nama": nama,
@@ -97,7 +97,7 @@ def save_pegawai():
                 info["nama"],
                 info["jabatan"],
                 info["hp"],
-                info.get("gaji", "")   # ★ simpan gaji
+                info.get("gaji", "")   
             ])
 
 

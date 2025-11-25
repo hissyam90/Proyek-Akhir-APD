@@ -18,7 +18,7 @@ def buat_tabel_menu(judul, opsi):
 while True:
     buat_tabel_menu(
         "PROGRAM MANAJEMEN PEGAWAI | Perusahaan Cumi Hitam Pak Kris",
-        ["1. Register (owner/admin)", "2. Login", "3. Keluar"]
+        ["1. Login", "2. Keluar"]
     )
 
     menu = input("Pilih menu: ").strip()
@@ -38,10 +38,9 @@ while True:
                     "MENU OWNER",
                     [
                         "1. Lihat Data Pegawai",
-                        "2. Lihat Semua Gaji",
-                        "3. Tambah/Set Gaji Pegawai",
-                        "4. Hapus Data Pegawai",
-                        "5. Logout"
+                        "2. Tambah/Set Gaji Pegawai",
+                        "3. Hapus Data Pegawai",
+                        "4. Logout"
                     ]
                 )
                 pilihan = input("Pilih menu: ").strip()

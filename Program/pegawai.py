@@ -9,20 +9,23 @@ def tampilkan_data():
         return False
 
     table = PrettyTable()
-    table.field_names = ["ID", "Nama", "Jabatan", "Nomor HP"]
+    table.field_names = ["ID", "Nama", "Jabatan", "Nomor HP", "Gaji"]
 
     for idp in sorted(function.pegawai.keys()):
         data = function.pegawai[idp]
+        gaji = data.get("gaji", "-") if data.get("gaji") else "-"
         table.add_row([
             idp,
             data.get("nama", ""),
             data.get("jabatan", ""),
-            data.get("hp", "")
+            data.get("hp", ""),
+            gaji
         ])
 
     print(table)
     print(f"Total Pegawai: {len(function.pegawai)}")
     return True
+
 
 
 # tambah data pegawai
@@ -47,7 +50,7 @@ def tambah_data():
             "nama": nama,
             "jabatan": jabatan,
             "hp": hp,
-            "gaji": None     # ★ gaji pindah ke sini
+            "gaji": None    
         }
 
         function.save_pegawai()
@@ -101,7 +104,7 @@ def hapus_data(id_hapus_raw):
         print("Error: ID pegawai tidak ditemukan.")
         return
 
-    # ★ hapus akun pegawai yang terhubung ke idpegawai
+    # hapus akun pegawai yang terhubung ke idpegawai
     hapus_user_list = []
     for username, info in function.pengguna.items():
         if info.get("idpegawai") == id_hapus:
@@ -154,7 +157,7 @@ def buat_akun_pegawai():
                 print("ID tidak ditemukan. Periksa tabel di atas.")
                 continue
 
-            break  # id valid
+            break  
 
         # username akun pegawai
         username = input("Masukkan username untuk pegawai: ").strip()
@@ -180,23 +183,6 @@ def buat_akun_pegawai():
     except Exception as e:
         print("Terjadi kesalahan saat membuat akun pegawai:", e)
 
-
-# owner liat semua gaji pegawai
-def lihat_semua_gaji():
-
-    if len(function.pegawai) == 0:
-        print("Belum ada data pegawai.")
-        return
-
-    t = PrettyTable()
-    t.field_names = ["ID Pegawai", "Nama", "Gaji"]
-
-    for idp in sorted(function.pegawai.keys()):
-        d = function.pegawai[idp]
-        gaji = d.get("gaji", "-")
-        t.add_row([idp, d["nama"], gaji])
-
-    print(t)
 
 
 # owner ngegaji pegawai
@@ -233,7 +219,7 @@ def set_gaji():
         print("Error: Gaji harus angka.")
         return
 
-    # ★ simpan gaji ke pegawai.csv
+    # simpan gaji ke pegawai.csv
     function.pegawai[idp]["gaji"] = nominal
     function.save_pegawai()
 

@@ -42,6 +42,21 @@ Repositori ini merupakan tempat pengumpulan **Program**, **Flowchart**, dan **La
 
 ---
 
+## 🏷️ Informasi Branch
+
+Repositori ini menggunakan beberapa branch dengan tujuan yang berbeda untuk menjaga alur kerja tetap terstruktur dan terorganisir:
+
+- **main**
+  Merupakan branch utama yang berisi versi final dan stabil dari program. Semua fitur yang telah melalui proses pengecekan dan validasi akan di-merge ke branch ini.
+
+- **checkpoint-1**
+  Digunakan sebagai branch khusus untuk kebutuhan Checkpoint 1, termasuk pengembangan fitur, revisi, atau dokumentasi yang terkait dengan tahap checkpoint tersebut.
+
+- **testing**
+  Merupakan branch pengujian yang digunakan untuk menguji fitur baru, perbaikan bug, atau eksperimen kode sebelum diintegrasikan ke branch utama.
+
+---
+
 ## 👥 Anggota Kelompok
 
 | Nama                      | NIM         |

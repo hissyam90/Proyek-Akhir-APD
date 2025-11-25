@@ -40,7 +40,9 @@ while True:
                         "1. Lihat Data Pegawai",
                         "2. Tambah/Set Gaji Pegawai",
                         "3. Hapus Data Pegawai",
-                        "4. Logout"
+                        "4. Lihat Semua Absensi",
+                        "5. Cek Kehadiran Hari Ini",
+                        "6. Logout"
                     ]
                 )
                 pilihan = input("Pilih menu: ").strip()
@@ -57,6 +59,12 @@ while True:
                         pegawai.hapus_data(id_hapus)
 
                 elif pilihan == "4":
+                    pegawai.lihat_absensi_semua()
+
+                elif pilihan == "5":
+                    pegawai.cek_kehadiran_hari_ini()
+
+                elif pilihan == "6":
                     print("Logout berhasil.")
                     function.login = None
                     break
@@ -102,15 +110,21 @@ while True:
             while True:
                 buat_tabel_menu(
                     "MENU PEGAWAI",
-                    ["1. Lihat Gaji Saya", "2. Logout"]
+                    ["1. Absensi", "2. Lihat Gaji Saya", "3. Lihat Absensi", "4. Logout"]
                 )
 
                 pilihan = input("Pilih menu: ").strip()
 
                 if pilihan == "1":
-                    pegawai.lihat_gaji_sendiri(function.login.get("username"))
+                    pegawai.absen(function.login.get("username"))
 
                 elif pilihan == "2":
+                    pegawai.lihat_gaji_sendiri(function.login.get("username"))
+
+                elif pilihan == "3":
+                    pegawai.lihat_absensi_sendiri(function.login.get("username"))
+
+                elif pilihan == "4":
                     print("Logout berhasil.")
                     function.login = None
                     break
@@ -122,7 +136,7 @@ while True:
             print("Role tidak dikenali.")
             function.login = None
 
-    elif menu == "3":
+    elif menu == "2":
         print("Terima kasih telah menggunakan program ini.")
         break
 

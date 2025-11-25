@@ -24,9 +24,6 @@ while True:
     menu = input("Pilih menu: ").strip()
 
     if menu == "1":
-        autentikasi.register()
-
-    elif menu == "2":
         autentikasi.login_user()
 
         if function.login is None:

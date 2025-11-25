@@ -1,27 +1,31 @@
+# pegawai.py
 import function
 from prettytable import PrettyTable
-import random
-import string
-from datetime import datetime
 
-def tampilkan_data(show_all=True):
+# tampilkan data pegawai
+def tampilkan_data():
     if len(function.pegawai) == 0:
         print("Belum ada data pegawai.")
         return False
 
     table = PrettyTable()
-    table.field_names = ["ID", "Nama", "Jabatan", "Nomor HP", "Status", "Gaji"]
+    table.field_names = ["ID", "Nama", "Jabatan", "Nomor HP"]
 
     for idp in sorted(function.pegawai.keys()):
         data = function.pegawai[idp]
-        status = data.get("status", "aktif")
-        g = function.gaji.get(idp, "(Belum diatur)")
-        table.add_row([idp, data["nama"], data["jabatan"], data["hp"], status, g])
+        table.add_row([
+            idp,
+            data.get("nama", ""),
+            data.get("jabatan", ""),
+            data.get("hp", "")
+        ])
 
     print(table)
     print(f"Total Pegawai: {len(function.pegawai)}")
     return True
 
+
+# tambah data pegawai
 def tambah_data():
     try:
         idp = function.generate_id_pegawai()
@@ -32,193 +36,213 @@ def tambah_data():
         hp = input("Masukkan Nomor HP: ").strip()
 
         if not nama or not jabatan:
-            print("Nama dan Jabatan tidak boleh kosong.")
+            print("Error: Nama dan Jabatan tidak boleh kosong.")
             return
+
         if not hp.isdigit():
-            print("Nomor HP harus angka.")
+            print("Error: Nomor HP harus angka.")
             return
 
-        function.pegawai[idp] = {"nama": nama, "jabatan": jabatan, "hp": hp, "status": "aktif"}
+        function.pegawai[idp] = {
+            "nama": nama,
+            "jabatan": jabatan,
+            "hp": hp
+        }
+
         function.save_pegawai()
-
-        base_username = ''.join(e for e in nama.lower() if e.isalnum())
-        username = f"{base_username}{idp}"
-        password = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(10))
-
-        i = 1
-        orig = username
-        while username in function.pengguna:
-            username = f"{orig}{i}"
-            i += 1
-
-        function.pengguna[username] = {"password": password, "role": "pegawai", "idpegawai": idp}
-        function.save_pengguna()
-
-        print("Pegawai ditambahkan.")
-        print(f"Akun otomatis → user: {username} | pass: {password}")
+        print("Data pegawai berhasil ditambahkan.")
 
     except Exception as e:
-        print("Kesalahan:", e)
+        print("Terjadi kesalahan saat menambah data:", e)
 
-def edit_data(id_raw):
+
+# edit data pegawai
+def edit_data(id_edit_raw):
     try:
-        idp = int(id_raw)
+        id_edit = int(id_edit_raw)
     except:
-        print("ID harus angka.")
+        print("Error: ID harus berupa angka.")
         return
 
-    if idp not in function.pegawai:
-        print("ID tidak ditemukan.")
+    if id_edit not in function.pegawai:
+        print("Error: ID pegawai tidak ditemukan.")
         return
 
-    nama = input("Nama baru: ").strip()
-    jab = input("Jabatan baru: ").strip()
-    hp = input("HP baru: ").strip()
+    nama_baru = input("Masukkan Nama baru: ").strip()
+    jabatan_baru = input("Masukkan Jabatan baru: ").strip()
+    hp_baru = input("Masukkan Nomor HP baru: ").strip()
 
-    if not hp.isdigit():
-        print("HP harus angka.")
+    if not nama_baru or not jabatan_baru:
+        print("Error: Nama dan Jabatan tidak boleh kosong.")
         return
 
-    function.pegawai[idp]["nama"] = nama
-    function.pegawai[idp]["jabatan"] = jab
-    function.pegawai[idp]["hp"] = hp
+    if not hp_baru.isdigit():
+        print("Error: Nomor HP harus angka.")
+        return
+
+    function.pegawai[id_edit]["nama"] = nama_baru
+    function.pegawai[id_edit]["jabatan"] = jabatan_baru
+    function.pegawai[id_edit]["hp"] = hp_baru
+
     function.save_pegawai()
+    print("Data berhasil diperbarui.")
 
-    print("Data diperbarui.")
 
-def hapus_data(id_raw):
+#  ngehapus data pegawai
+def hapus_data(id_hapus_raw):
     try:
-        idp = int(id_raw)
+        id_hapus = int(id_hapus_raw)
     except:
-        print("ID harus angka.")
+        print("Error: ID harus berupa angka.")
         return
 
-    if idp not in function.pegawai:
-        print("ID tidak ditemukan.")
+    if id_hapus not in function.pegawai:
+        print("Error: ID pegawai tidak ditemukan.")
         return
 
-    confirm = input("Ketik YA untuk hapus permanen: ")
-    if confirm != "YA":
-        print("Dibatalkan.")
-        return
-
-    if idp in function.gaji:
-        del function.gaji[idp]
+    # hapus gaji kalau ada
+    if id_hapus in function.gaji:
+        del function.gaji[id_hapus]
         function.save_gaji()
 
-    for u, info in list(function.pengguna.items()):
-        if info.get("idpegawai") == idp:
-            del function.pengguna[u]
+    # hapus akun pegawai di pengguna.csv
+    hapus_user_list = []
+    for username, info in function.pengguna.items():
+        if info.get("idpegawai") == id_hapus:
+            hapus_user_list.append(username)
+
+    for u in hapus_user_list:
+        del function.pengguna[u]
+
     function.save_pengguna()
 
-    function.cuti = [c for c in function.cuti if c["idpegawai"] != idp]
-    function.save_cuti()
-
-    function.absensi = [a for a in function.absensi if a["idpegawai"] != idp]
-    function.save_absensi()
-
-    del function.pegawai[idp]
+    # hapus pegawai
+    del function.pegawai[id_hapus]
     function.save_pegawai()
 
-    print("Pegawai dan data terkait dihapus.")
+    print("Data pegawai berhasil dihapus.")
 
+
+# admin ngebuat akun pegawai
+def buat_akun_pegawai():
+    try:
+        if len(function.pegawai) == 0:
+            print("Belum ada data pegawai. Tambahkan pegawai terlebih dahulu.")
+            return
+
+        # tampilkan tabel pegawai dulu
+        t = PrettyTable()
+        t.field_names = ["ID", "Nama", "Jabatan", "HP"]
+
+        for idp in sorted(function.pegawai.keys()):
+            d = function.pegawai[idp]
+            t.add_row([idp, d["nama"], d["jabatan"], d["hp"]])
+
+        print(t)
+
+        # ambil id yang valid
+        while True:
+            idp_raw = input("Masukkan ID Pegawai yang sudah terdaftar (atau ketik 'batal'): ").strip()
+
+            if idp_raw.lower() == "batal":
+                print("Dibatalkan.")
+                return
+
+            try:
+                idp = int(idp_raw)
+            except:
+                print("ID tidak valid, harus angka.")
+                continue
+
+            if idp not in function.pegawai:
+                print("ID tidak ditemukan. Periksa tabel di atas.")
+                continue
+
+            break  # id valid
+
+        # username akun pegawai
+        username = input("Masukkan username untuk pegawai: ").strip()
+        if username in function.pengguna:
+            print("Error: Username sudah digunakan.")
+            return
+
+        password = input("Masukkan password (minimal 15 karakter): ").strip()
+        if len(password) < 15:
+            print("Error: Password minimal 15 karakter.")
+            return
+
+        # simpan akun
+        function.pengguna[username] = {
+            "password": password,
+            "role": "pegawai",
+            "idpegawai": idp
+        }
+
+        function.save_pengguna()
+        print(f"Akun pegawai '{username}' berhasil dibuat dan terhubung ke ID {idp}.")
+
+    except Exception as e:
+        print("Terjadi kesalahan saat membuat akun pegawai:", e)
+
+
+# owner liat semua gaji pegawai
+def lihat_semua_gaji():
+    if len(function.gaji) == 0:
+        print("Belum ada data gaji.")
+        return
+
+    t = PrettyTable()
+    t.field_names = ["ID Pegawai", "Nama", "Gaji"]
+
+    for idp in sorted(function.gaji.keys()):
+        nama = function.pegawai.get(idp, {}).get("nama", "(Tidak Terdaftar)")
+        t.add_row([idp, nama, function.gaji[idp]])
+
+    print(t)
+
+
+# owner ngegaji pegawai
 def set_gaji():
     try:
-        idp = int(input("ID Pegawai: "))
+        idp_raw = input("Masukkan ID Pegawai: ").strip()
+        idp = int(idp_raw)
     except:
-        print("Harus angka.")
+        print("Error: ID harus berupa angka.")
         return
 
     if idp not in function.pegawai:
-        print("ID tidak ditemukan.")
+        print("Error: ID pegawai tidak ditemukan.")
         return
 
-    nominal = input("Nominal gaji: ")
-    if not nominal.replace(".", "").isdigit():
-        print("Harus angka.")
+    nominal = input("Masukkan nominal gaji: ").strip()
+    if not nominal.replace(".", "", 1).isdigit():
+        print("Error: Gaji harus angka.")
         return
 
     function.gaji[idp] = nominal
     function.save_gaji()
-    print("Gaji disimpan.")
 
+    print("Gaji berhasil disimpan.")
+
+
+#  pegawai liat gaji sendiri
 def lihat_gaji_sendiri(username):
     info = function.pengguna.get(username)
+
     if not info:
-        print("Error pengguna.")
+        print("Error: Pegawai tidak ditemukan.")
         return
 
     idp = info.get("idpegawai")
+
     if idp not in function.gaji:
         print("Gaji belum diatur.")
         return
 
-    nama = function.pegawai.get(idp, {}).get("nama", "(tidak ada)")
+    nama = function.pegawai.get(idp, {}).get("nama", "(Tidak Terdaftar)")
+
     t = PrettyTable()
-    t.field_names = ["ID", "Nama", "Gaji"]
+    t.field_names = ["ID Pegawai", "Nama", "Gaji"]
     t.add_row([idp, nama, function.gaji[idp]])
+
     print(t)
-
-def ajukan_cuti(idp):
-    mulai = input("Mulai (YYYY-MM-DD): ")
-    selesai = input("Selesai (YYYY-MM-DD): ")
-    ket = input("Keterangan: ")
-
-    function.cuti.append({
-        "idpegawai": idp,
-        "mulai": mulai,
-        "selesai": selesai,
-        "keterangan": ket
-    })
-    function.save_cuti()
-
-    print("Cuti diajukan.")
-
-def lihat_cuti_all():
-    if not function.cuti:
-        print("Tidak ada data cuti.")
-        return
-
-    t = PrettyTable()
-    t.field_names = ["ID", "Nama", "Mulai", "Selesai", "Keterangan"]
-    for c in function.cuti:
-        nama = function.pegawai.get(c["idpegawai"], {}).get("nama", "(tidak)")
-        t.add_row([c["idpegawai"], nama, c["mulai"], c["selesai"], c["keterangan"]])
-    print(t)
-
-def absensi(idp, jenis):
-    now = datetime.now()
-    function.absensi.append({
-        "idpegawai": idp,
-        "tanggal": now.strftime("%Y-%m-%d"),
-        "waktu": now.strftime("%H:%M:%S"),
-        "jenis": jenis
-    })
-    function.save_absensi()
-    print(f"Absensi {jenis} tersimpan.")
-
-def lihat_absensi_all():
-    if not function.absensi:
-        print("Belum ada absensi.")
-        return
-
-    t = PrettyTable()
-    t.field_names = ["ID", "Nama", "Tanggal", "Waktu", "Jenis"]
-    for a in function.absensi:
-        nama = function.pegawai.get(a["idpegawai"], {}).get("nama", "(tidak)")
-        t.add_row([a["idpegawai"], nama, a["tanggal"], a["waktu"], a["jenis"]])
-    print(t)
-
-def set_resign(idp):
-    if idp not in function.pegawai:
-        print("ID tidak ditemukan.")
-        return
-
-    function.pegawai[idp]["status"] = "resign"
-    for u, info in function.pengguna.items():
-        if info.get("idpegawai") == idp:
-            function.pengguna[u]["idpegawai"] = None
-
-    function.save_pegawai()
-    function.save_pengguna()
-    print("Pegawai di-set resign.")

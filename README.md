@@ -12,9 +12,6 @@ Repositori ini merupakan tempat pengumpulan **Program**, **Flowchart**, dan **La
 ├── 📁 Flowchart
 │   └── (diagram alur logika sistem)
 │
-├── 📁 Laporan
-│   └── (laporan akhir dalam format PDF/DOCX)
-│
 ├── 📁 Program
 │   └── (kode sumber dan dokumentasi program)
 │
@@ -33,9 +30,6 @@ Repositori ini merupakan tempat pengumpulan **Program**, **Flowchart**, dan **La
 
 - **Flowchart/**  
   Berisi diagram alur (flowchart) yang menggambarkan logika dan proses kerja sistem.  
-
-- **Laporan/**  
-  Berisi laporan akhir proyek, mencakup latar belakang, perancangan, implementasi, serta kesimpulan.
 
 - **csv/**  
   Berisi penyimpanan data dari program ini, mencakup data gaji, data pegawai, data pengguna (yang berisi akun-akun).

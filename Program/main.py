@@ -41,8 +41,9 @@ while True:
                         "2. Tambah/Set Gaji Pegawai",
                         "3. Hapus Data Pegawai",
                         "4. Lihat Semua Absensi",
-                        "5. Cek Kehadiran Hari Ini",
-                        "6. Logout"
+                        "5. Lihat Semua Resign",
+                        "6. Ubah Status Resign",
+                        "7. Logout"
                     ]
                 )
                 pilihan = input("Pilih menu: ").strip()
@@ -62,9 +63,12 @@ while True:
                     pegawai.lihat_absensi_semua()
 
                 elif pilihan == "5":
-                    pegawai.cek_kehadiran_hari_ini()
+                    pegawai.lihat_semua_resign_owner()
 
                 elif pilihan == "6":
+                    pegawai.ubah_status_resign()
+
+                elif pilihan == "7":
                     print("Logout berhasil.")
                     function.login = None
                     break
@@ -110,7 +114,14 @@ while True:
             while True:
                 buat_tabel_menu(
                     "MENU PEGAWAI",
-                    ["1. Absensi", "2. Lihat Gaji Saya", "3. Lihat Absensi", "4. Logout"]
+                    [
+                        "1. Absensi",
+                        "2. Lihat Gaji Saya",
+                        "3. Lihat Absensi",
+                        "4. Ajukan Resign",
+                        "5. Lihat Status Resign",
+                        "6. Logout"
+                    ]
                 )
 
                 pilihan = input("Pilih menu: ").strip()
@@ -125,6 +136,12 @@ while True:
                     pegawai.lihat_absensi_sendiri(function.login.get("username"))
 
                 elif pilihan == "4":
+                    pegawai.ajukan_resign(function.login.get("username"))
+
+                elif pilihan == "5":
+                    pegawai.lihat_resign_sendiri(function.login.get("username"))
+
+                elif pilihan == "6":
                     print("Logout berhasil.")
                     function.login = None
                     break

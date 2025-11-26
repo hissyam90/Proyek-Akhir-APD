@@ -135,6 +135,11 @@ def hapus_data(id_hapus_raw):
         del function.absensi[id_hapus]
         function.save_absensi()
 
+    # hapus resign terkait
+    if id_hapus in function.resign:
+        del function.resign[id_hapus]
+        function.save_resign()
+
     # hapus pegawai
     del function.pegawai[id_hapus]
     function.save_pegawai()
@@ -202,6 +207,25 @@ def buat_akun_pegawai():
 
     except Exception as e:
         print("Terjadi kesalahan saat membuat akun pegawai:", e)
+
+
+# owner liat semua gaji pegawai
+def lihat_semua_gaji():
+
+    if len(function.pegawai) == 0:
+        print("Belum ada data pegawai.")
+        return
+
+    t = PrettyTable()
+    t.field_names = ["ID Pegawai", "Nama", "Gaji"]
+
+    for idp in sorted(function.pegawai.keys()):
+        d = function.pegawai[idp]
+        gaji = d.get("gaji", "-")
+        t.add_row([idp, d["nama"], gaji])
+
+    print(t)
+
 
 # owner ngegaji pegawai
 def set_gaji():
@@ -349,20 +373,115 @@ def lihat_absensi_semua():
 
     print(t)
 
+# fitur resign
+def ajukan_resign(username):
+    info = function.pengguna.get(username)
+    if not info:
+        print("Error: Pengguna tidak ditemukan.")
+        return
 
-def cek_kehadiran_hari_ini():
-    hari_ini = datetime.date.today().strftime("%Y-%m-%d")
+    idp = info.get("idpegawai")
+
+    # jika sudah pernah ajukan
+    if idp in function.resign:
+        print("Anda sudah pernah mengajukan resign.")
+        print("Status saat ini:", function.resign[idp]["status"])
+        return
+
+    alasan = input("Masukkan alasan resign: ").strip()
+    if not alasan:
+        print("Alasan tidak boleh kosong.")
+        return
+
+    tanggal = datetime.date.today().strftime("%Y-%m-%d")
+
+    function.resign[idp] = {
+        "tanggal": tanggal,
+        "alasan": alasan,
+        "status": "Pending"
+    }
+    function.save_resign()
+
+    print("Pengajuan resign berhasil dikirim.")
+
+
+def lihat_resign_sendiri(username):
+    info = function.pengguna.get(username)
+    if not info:
+        print("Error: Pengguna tidak ditemukan.")
+        return
+
+    idp = info.get("idpegawai")
+
+    if idp not in function.resign:
+        print("Anda belum mengajukan resign.")
+        return
+
+    r = function.resign[idp]
 
     t = PrettyTable()
-    t.field_names = ["ID Pegawai", "Nama", "Status Hari Ini"]
+    t.field_names = ["Tanggal", "Alasan", "Status"]
+    t.add_row([r["tanggal"], r["alasan"], r["status"]])
+    print(t)
 
-    for idp in sorted(function.pegawai.keys()):
-        status = "Absen"
-        if idp in function.absensi:
-            for r in function.absensi[idp]:
-                if r.get("tanggal") == hari_ini:
-                    status = r.get("status","Absen")
-                    break
-        t.add_row([idp, function.pegawai[idp].get("nama",""), status])
+
+def lihat_semua_resign_owner():
+    if len(function.resign) == 0:
+        print("Belum ada data resign.")
+        return
+
+    t = PrettyTable()
+    t.field_names = ["ID Pegawai", "Nama", "Tanggal", "Alasan", "Status"]
+
+    for idp, r in sorted(function.resign.items()):
+        nama = function.pegawai.get(idp, {}).get("nama", "(Tidak Terdaftar)")
+        t.add_row([idp, nama, r["tanggal"], r["alasan"], r["status"]])
 
     print(t)
+
+
+def ubah_status_resign():
+    if len(function.resign) == 0:
+        print("Belum ada data resign.")
+        return
+
+    t = PrettyTable()
+    t.field_names = ["ID Pegawai", "Nama", "Status"]
+
+    for idp, r in sorted(function.resign.items()):
+        nama = function.pegawai.get(idp, {}).get("nama", "(Tidak Terdaftar)")
+        t.add_row([idp, nama, r["status"]])
+
+    print(t)
+
+    try:
+        idp_raw = input("Masukkan ID pegawai yang ingin diubah status resign: ").strip()
+        idp = int(idp_raw)
+    except:
+        print("ID tidak valid.")
+        return
+
+    if idp not in function.resign:
+        print("Pegawai tidak memiliki permohonan resign.")
+        return
+
+    print("Pilih status baru:")
+    print("1. Pending")
+    print("2. Diterima")
+    print("3. Ditolak")
+
+    pilih = input("Pilih: ").strip()
+    status_map = {
+        "1": "Pending",
+        "2": "Diterima",
+        "3": "Ditolak"
+    }
+
+    if pilih not in status_map:
+        print("Pilihan tidak valid.")
+        return
+
+    function.resign[idp]["status"] = status_map[pilih]
+    function.save_resign()
+
+    print("Status resign berhasil diperbarui.")

@@ -7,11 +7,13 @@ CSV_DIR = "csv"
 PENGGUNA_CSV = os.path.join(CSV_DIR, "pengguna.csv")
 PEGAWAI_CSV = os.path.join(CSV_DIR, "pegawai.csv")
 ABSENSI_CSV = os.path.join(CSV_DIR, "absensi.csv")
+RESIGN_CSV = os.path.join(CSV_DIR, "resign.csv")
 
 # global variable
 pengguna = {}   
 pegawai = {}    
 absensi = {}    
+resign = {}     
 login = None    
 
 
@@ -127,16 +129,45 @@ def save_absensi():
             for r in absensi[idp]:
                 writer.writerow([idp, r.get("tanggal",""), r.get("status","")])
 
+def load_resign():
+    resign.clear()
+    if not os.path.exists(RESIGN_CSV):
+        return
+
+    with open(RESIGN_CSV, newline="", encoding="utf-8") as f:
+        reader = csv.reader(f)
+        for row in reader:
+            if not row:
+                continue
+            try:
+                idp = int(row[0])
+            except:
+                continue
+            tanggal = row[1] if len(row) > 1 else ""
+            alasan = row[2] if len(row) > 2 else ""
+            status = row[3] if len(row) > 3 else "Pending"
+            resign[idp] = {"tanggal": tanggal, "alasan": alasan, "status": status}
+
+def save_resign():
+    ensure_csv_dir()
+    with open(RESIGN_CSV, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        for idp in sorted(resign.keys()):
+            r = resign[idp]
+            writer.writerow([idp, r.get("tanggal",""), r.get("alasan",""), r.get("status","")])
+
 def load_all():
     ensure_csv_dir()
     load_pengguna()
     load_pegawai()
     load_absensi()
+    load_resign()
 
 def save_all():
     save_pengguna()
     save_pegawai()
     save_absensi()
+    save_resign()
 
 # auto increment id pegawai
 def generate_id_pegawai():

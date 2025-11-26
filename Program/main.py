@@ -41,9 +41,8 @@ while True:
                         "2. Tambah/Set Gaji Pegawai",
                         "3. Hapus Data Pegawai",
                         "4. Lihat Semua Absensi",
-                        "5. Lihat Semua Resign",
-                        "6. Ubah Status Resign",
-                        "7. Logout"
+                        "5. Pengajuan Resign Pegawai",
+                        "6. Logout"
                     ]
                 )
                 pilihan = input("Pilih menu: ").strip()
@@ -63,12 +62,9 @@ while True:
                     pegawai.lihat_absensi_semua()
 
                 elif pilihan == "5":
-                    pegawai.lihat_semua_resign_owner()
+                    pegawai.menu_resign_owner()
 
                 elif pilihan == "6":
-                    pegawai.ubah_status_resign()
-
-                elif pilihan == "7":
                     print("Logout berhasil.")
                     function.login = None
                     break

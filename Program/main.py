@@ -18,15 +18,12 @@ def buat_tabel_menu(judul, opsi):
 while True:
     buat_tabel_menu(
         "PROGRAM MANAJEMEN PEGAWAI | Perusahaan Cumi Hitam Pak Kris",
-        ["1. Register (owner/admin)", "2. Login", "3. Keluar"]
+        ["1. Login", "2. Keluar"]
     )
 
     menu = input("Pilih menu: ").strip()
 
     if menu == "1":
-        autentikasi.register()
-
-    elif menu == "2":
         autentikasi.login_user()
 
         if function.login is None:
@@ -41,10 +38,11 @@ while True:
                     "MENU OWNER",
                     [
                         "1. Lihat Data Pegawai",
-                        "2. Lihat Semua Gaji",
-                        "3. Tambah/Set Gaji Pegawai",
-                        "4. Hapus Data Pegawai",
-                        "5. Logout"
+                        "2. Tambah/Set Gaji Pegawai",
+                        "3. Hapus Data Pegawai",
+                        "4. Lihat Semua Absensi",
+                        "5. Cek Kehadiran Hari Ini",
+                        "6. Logout"
                     ]
                 )
                 pilihan = input("Pilih menu: ").strip()
@@ -53,17 +51,20 @@ while True:
                     pegawai.tampilkan_data()
 
                 elif pilihan == "2":
-                    pegawai.lihat_semua_gaji()
-
-                elif pilihan == "3":
                     pegawai.set_gaji()
 
-                elif pilihan == "4":
+                elif pilihan == "3":
                     if pegawai.tampilkan_data():
                         id_hapus = input("Masukkan ID Pegawai yang ingin dihapus: ").strip()
                         pegawai.hapus_data(id_hapus)
 
+                elif pilihan == "4":
+                    pegawai.lihat_absensi_semua()
+
                 elif pilihan == "5":
+                    pegawai.cek_kehadiran_hari_ini()
+
+                elif pilihan == "6":
                     print("Logout berhasil.")
                     function.login = None
                     break
@@ -80,8 +81,7 @@ while True:
                         "1. Lihat Data Pegawai",
                         "2. Tambah Pegawai",
                         "3. Edit Data Pegawai",
-                        "4. Buat Akun Pegawai",
-                        "5. Logout"
+                        "4. Logout"
                     ]
                 )
                 pilihan = input("Pilih menu: ").strip()
@@ -98,9 +98,6 @@ while True:
                         pegawai.edit_data(id_edit)
 
                 elif pilihan == "4":
-                    pegawai.buat_akun_pegawai()
-
-                elif pilihan == "5":
                     print("Logout berhasil.")
                     function.login = None
                     break
@@ -113,15 +110,21 @@ while True:
             while True:
                 buat_tabel_menu(
                     "MENU PEGAWAI",
-                    ["1. Lihat Gaji Saya", "2. Logout"]
+                    ["1. Absensi", "2. Lihat Gaji Saya", "3. Lihat Absensi", "4. Logout"]
                 )
 
                 pilihan = input("Pilih menu: ").strip()
 
                 if pilihan == "1":
-                    pegawai.lihat_gaji_sendiri(function.login.get("username"))
+                    pegawai.absen(function.login.get("username"))
 
                 elif pilihan == "2":
+                    pegawai.lihat_gaji_sendiri(function.login.get("username"))
+
+                elif pilihan == "3":
+                    pegawai.lihat_absensi_sendiri(function.login.get("username"))
+
+                elif pilihan == "4":
                     print("Logout berhasil.")
                     function.login = None
                     break
@@ -133,7 +136,7 @@ while True:
             print("Role tidak dikenali.")
             function.login = None
 
-    elif menu == "3":
+    elif menu == "2":
         print("Terima kasih telah menggunakan program ini.")
         break
 

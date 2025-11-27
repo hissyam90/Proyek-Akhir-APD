@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.2.5 Chrome/138.0.7204.251 Electron/37.6.1 Safari/537.36" version="28.2.5">
   <diagram name="Page-1" id="6GBm7IarRMQrQnRSBKbb">
-    <mxGraphModel dx="3319" dy="2276" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1644" dy="1478" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -351,11 +351,10 @@
         <mxCell id="OsWhHuEXGQKURZjVq2BP-238" value="Menu login" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="705" y="585" width="55" height="55" as="geometry" />
         </mxCell>
-        <mxCell id="iVc4ToF9vX-55lupRQYR-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="iVc4ToF9vX-55lupRQYR-1" target="iVc4ToF9vX-55lupRQYR-2" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="iVc4ToF9vX-55lupRQYR-1" value="register" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" parent="1" vertex="1">
-          <mxGeometry x="28" y="1600" width="120" height="60" as="geometry" />
+        <mxCell id="iVc4ToF9vX-55lupRQYR-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="iVc4ToF9vX-55lupRQYR-2" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="88.00000000000023" y="1660" as="sourcePoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="iVc4ToF9vX-55lupRQYR-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="iVc4ToF9vX-55lupRQYR-2" target="iVc4ToF9vX-55lupRQYR-8" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -2515,32 +2514,35 @@
             <mxPoint x="5020" y="1500" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="FnUNnuObb3H1TkxMCbdv-1" value="hapus data" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+        <mxCell id="FnUNnuObb3H1TkxMCbdv-1" value="hapus data" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="3750" y="1590" width="80" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="FnUNnuObb3H1TkxMCbdv-2" value="edit data" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+        <mxCell id="FnUNnuObb3H1TkxMCbdv-2" value="edit data" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="2918" y="1580" width="80" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="FnUNnuObb3H1TkxMCbdv-3" value="tampilkan data" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+        <mxCell id="FnUNnuObb3H1TkxMCbdv-3" value="tampilkan data" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="2320" y="1580" width="80" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="FnUNnuObb3H1TkxMCbdv-4" value="tambahkan data" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+        <mxCell id="FnUNnuObb3H1TkxMCbdv-4" value="tambahkan data" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="1600" y="1580" width="80" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="FnUNnuObb3H1TkxMCbdv-5" value="login" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+        <mxCell id="FnUNnuObb3H1TkxMCbdv-5" value="login" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="917" y="1580" width="80" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="FnUNnuObb3H1TkxMCbdv-6" value="buat akun pegawai" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+        <mxCell id="FnUNnuObb3H1TkxMCbdv-6" value="buat akun pegawai" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="1944" y="3640" width="80" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="FnUNnuObb3H1TkxMCbdv-7" value="lihat gaji sendiri" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+        <mxCell id="FnUNnuObb3H1TkxMCbdv-7" value="lihat gaji sendiri" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="1260" y="3640" width="80" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="FnUNnuObb3H1TkxMCbdv-8" value="set gaji" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+        <mxCell id="FnUNnuObb3H1TkxMCbdv-8" value="set gaji" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="615" y="3640" width="80" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="FnUNnuObb3H1TkxMCbdv-9" value="lihat semua gaji" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+        <mxCell id="FnUNnuObb3H1TkxMCbdv-9" value="lihat semua gaji" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="47" y="3640" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="5diVYUPxyyZGkhaawxHU-1" value="register" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="45" y="1580" width="80" height="80" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

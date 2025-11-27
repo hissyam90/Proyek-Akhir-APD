@@ -425,11 +425,12 @@ def lihat_resign_sendiri(username):
     print(t)
 
 
-def lihat_semua_resign_owner():
+def menu_resign_owner():
     if len(function.resign) == 0:
-        print("Belum ada data resign.")
+        print("Belum ada pengajuan resign.")
         return
 
+    # tampilkan semua resign
     t = PrettyTable()
     t.field_names = ["ID Pegawai", "Nama", "Tanggal", "Alasan", "Status"]
 
@@ -439,30 +440,23 @@ def lihat_semua_resign_owner():
 
     print(t)
 
+    # tanya apakah ingin update status
+    pilihan = input("Apakah ingin mengubah status pengajuan resign? (y/n): ").strip().lower()
 
-def ubah_status_resign():
-    if len(function.resign) == 0:
-        print("Belum ada data resign.")
+    if pilihan != "y":
+        print("Kembali ke menu owner...")
         return
 
-    t = PrettyTable()
-    t.field_names = ["ID Pegawai", "Nama", "Status"]
-
-    for idp, r in sorted(function.resign.items()):
-        nama = function.pegawai.get(idp, {}).get("nama", "(Tidak Terdaftar)")
-        t.add_row([idp, nama, r["status"]])
-
-    print(t)
-
+    # proses ubah status
     try:
-        idp_raw = input("Masukkan ID pegawai yang ingin diubah status resign: ").strip()
+        idp_raw = input("Masukkan ID pegawai: ").strip()
         idp = int(idp_raw)
     except:
         print("ID tidak valid.")
         return
 
     if idp not in function.resign:
-        print("Pegawai tidak memiliki permohonan resign.")
+        print("Pegawai ini tidak memiliki pengajuan resign.")
         return
 
     print("Pilih status baru:")
@@ -484,4 +478,4 @@ def ubah_status_resign():
     function.resign[idp]["status"] = status_map[pilih]
     function.save_resign()
 
-    print("Status resign berhasil diperbarui.")
+    print("Status pengajuan resign berhasil diperbarui.")
